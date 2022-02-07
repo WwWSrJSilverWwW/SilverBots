@@ -1,7 +1,14 @@
-from .first_type import TelegramType
+class BaseType:
+    def __init__(self, scopes):
+        for x in scopes:
+            self.__setattr__(x[0], x[1])
+        self._view = self.__dict__.copy()
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(" + ", ".join([f"{x[0]}={x[1]}" for x in self._view.items() if x[1] is not None]) + ")"
 
 
-class User(TelegramType):
+class User(BaseType):
     def __init__(self,
                  id,
                  is_bot,
@@ -15,7 +22,7 @@ class User(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Chat(TelegramType):
+class Chat(BaseType):
     def __init__(self,
                  id,
                  type,
@@ -40,7 +47,7 @@ class Chat(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Message(TelegramType):
+class Message(BaseType):
     def __init__(self,
                  message_id,
                  date,
@@ -103,13 +110,13 @@ class Message(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class MessageId(TelegramType):
+class MessageId(BaseType):
     def __init__(self,
                  message_id):
         super().__init__(list(locals().items())[1:])
 
 
-class MessageEntity(TelegramType):
+class MessageEntity(BaseType):
     def __init__(self,
                  type,
                  offset,
@@ -120,7 +127,7 @@ class MessageEntity(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class PhotoSize(TelegramType):
+class PhotoSize(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -130,7 +137,7 @@ class PhotoSize(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Animation(TelegramType):
+class Animation(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -144,7 +151,7 @@ class Animation(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Audio(TelegramType):
+class Audio(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -158,7 +165,7 @@ class Audio(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Document(TelegramType):
+class Document(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -169,7 +176,7 @@ class Document(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Video(TelegramType):
+class Video(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -183,7 +190,7 @@ class Video(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class VideoNote(TelegramType):
+class VideoNote(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -194,7 +201,7 @@ class VideoNote(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Voice(TelegramType):
+class Voice(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -204,7 +211,7 @@ class Voice(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Contact(TelegramType):
+class Contact(BaseType):
     def __init__(self,
                  phone_number,
                  first_name,
@@ -214,21 +221,21 @@ class Contact(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Dice(TelegramType):
+class Dice(BaseType):
     def __init__(self,
                  emoji,
                  value):
         super().__init__(list(locals().items())[1:])
 
 
-class PollOption(TelegramType):
+class PollOption(BaseType):
     def __init__(self,
                  text,
                  voter_count):
         super().__init__(list(locals().items())[1:])
 
 
-class PollAnswer(TelegramType):
+class PollAnswer(BaseType):
     def __init__(self,
                  poll_id,
                  user,
@@ -236,7 +243,7 @@ class PollAnswer(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Poll(TelegramType):
+class Poll(BaseType):
     def __init__(self,
                  id,
                  question,
@@ -254,7 +261,7 @@ class Poll(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Location(TelegramType):
+class Location(BaseType):
     def __init__(self,
                  longitude,
                  latitude,
@@ -265,7 +272,7 @@ class Location(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Venue(TelegramType):
+class Venue(BaseType):
     def __init__(self,
                  location,
                  title,
@@ -277,7 +284,7 @@ class Venue(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ProximityAlertTriggered(TelegramType):
+class ProximityAlertTriggered(BaseType):
     def __init__(self,
                  traveler,
                  watcher,
@@ -285,42 +292,42 @@ class ProximityAlertTriggered(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class MessageAutoDeleteTimerChanged(TelegramType):
+class MessageAutoDeleteTimerChanged(BaseType):
     def __init__(self,
                  message_auto_delete_time):
         super().__init__(list(locals().items())[1:])
 
 
-class VoiceChatScheduled(TelegramType):
+class VoiceChatScheduled(BaseType):
     def __init__(self,
                  start_date):
         super().__init__(list(locals().items())[1:])
 
 
-class VoiceChatStarted(TelegramType):
+class VoiceChatStarted(BaseType):
     pass
 
 
-class VoiceChatEnded(TelegramType):
+class VoiceChatEnded(BaseType):
     def __init__(self,
                  duration):
         super().__init__(list(locals().items())[1:])
 
 
-class VoiceChatParticipantsInvited(TelegramType):
+class VoiceChatParticipantsInvited(BaseType):
     def __init__(self,
                  users=None):
         super().__init__(list(locals().items())[1:])
 
 
-class UserProfilePhotos(TelegramType):
+class UserProfilePhotos(BaseType):
     def __init__(self,
                  total_count,
                  photos):
         super().__init__(list(locals().items())[1:])
 
 
-class File(TelegramType):
+class File(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -329,7 +336,7 @@ class File(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ReplyKeyboardMarkup(TelegramType):
+class ReplyKeyboardMarkup(BaseType):
     def __init__(self,
                  keyboard,
                  resize_keyboard=None,
@@ -339,7 +346,7 @@ class ReplyKeyboardMarkup(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class KeyboardButton(TelegramType):
+class KeyboardButton(BaseType):
     def __init__(self,
                  text,
                  request_contact=None,
@@ -348,26 +355,26 @@ class KeyboardButton(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class KeyboardButtonPollType(TelegramType):
+class KeyboardButtonPollType(BaseType):
     def __init__(self,
                  type=None):
         super().__init__(list(locals().items())[1:])
 
 
-class ReplyKeyboardRemove(TelegramType):
+class ReplyKeyboardRemove(BaseType):
     def __init__(self,
                  remove_keyboard,
                  selective=None):
         super().__init__(list(locals().items())[1:])
 
 
-class InlineKeyboardMarkup(TelegramType):
+class InlineKeyboardMarkup(BaseType):
     def __init__(self,
                  inline_keyboard):
         super().__init__(list(locals().items())[1:])
 
 
-class InlineKeyboardButton(TelegramType):
+class InlineKeyboardButton(BaseType):
     def __init__(self,
                  text,
                  url=None,
@@ -380,7 +387,7 @@ class InlineKeyboardButton(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class LoginUrl(TelegramType):
+class LoginUrl(BaseType):
     def __init__(self,
                  url,
                  forward_text=None,
@@ -389,7 +396,7 @@ class LoginUrl(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class CallbackQuery(TelegramType):
+class CallbackQuery(BaseType):
     def __init__(self,
                  id,
                  from_,
@@ -401,7 +408,7 @@ class CallbackQuery(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ForceReply(TelegramType):
+class ForceReply(BaseType):
     def __init__(self,
                  force_reply,
                  input_field_placeholder=None,
@@ -409,7 +416,7 @@ class ForceReply(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatPhoto(TelegramType):
+class ChatPhoto(BaseType):
     def __init__(self,
                  small_file_id,
                  small_file_unique_id,
@@ -418,7 +425,7 @@ class ChatPhoto(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatInviteLink(TelegramType):
+class ChatInviteLink(BaseType):
     def __init__(self,
                  invite_link,
                  creator,
@@ -432,11 +439,11 @@ class ChatInviteLink(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMember(TelegramType):
+class ChatMember(BaseType):
     pass
 
 
-class ChatMemberOwner(TelegramType):
+class ChatMemberOwner(BaseType):
     def __init__(self,
                  status,
                  user,
@@ -445,7 +452,7 @@ class ChatMemberOwner(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMemberAdministrator(TelegramType):
+class ChatMemberAdministrator(BaseType):
     def __init__(self,
                  status,
                  user,
@@ -465,14 +472,14 @@ class ChatMemberAdministrator(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMemberMember(TelegramType):
+class ChatMemberMember(BaseType):
     def __init__(self,
                  status,
                  user):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMemberRestricted(TelegramType):
+class ChatMemberRestricted(BaseType):
     def __init__(self,
                  status,
                  user,
@@ -489,14 +496,14 @@ class ChatMemberRestricted(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMemberLeft(TelegramType):
+class ChatMemberLeft(BaseType):
     def __init__(self,
                  status,
                  user):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMemberBanned(TelegramType):
+class ChatMemberBanned(BaseType):
     def __init__(self,
                  status,
                  user,
@@ -504,7 +511,7 @@ class ChatMemberBanned(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatMemberUpdated(TelegramType):
+class ChatMemberUpdated(BaseType):
     def __init__(self,
                  chat,
                  from_,
@@ -515,7 +522,7 @@ class ChatMemberUpdated(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatJoinRequest(TelegramType):
+class ChatJoinRequest(BaseType):
     def __init__(self,
                  chat,
                  from_,
@@ -525,7 +532,7 @@ class ChatJoinRequest(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatPermissions(TelegramType):
+class ChatPermissions(BaseType):
     def __init__(self,
                  can_send_messages=None,
                  can_send_media_messages=None,
@@ -538,63 +545,63 @@ class ChatPermissions(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ChatLocation(TelegramType):
+class ChatLocation(BaseType):
     def __init__(self,
                  location,
                  address):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommand(TelegramType):
+class BotCommand(BaseType):
     def __init__(self,
                  command,
                  description):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScope(TelegramType):
+class BotCommandScope(BaseType):
     pass
 
 
-class BotCommandScopeDefault(TelegramType):
+class BotCommandScopeDefault(BaseType):
     def __init__(self,
                  type):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScopeAllPrivateChats(TelegramType):
+class BotCommandScopeAllPrivateChats(BaseType):
     def __init__(self,
                  type):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScopeAllGroupChats(TelegramType):
+class BotCommandScopeAllGroupChats(BaseType):
     def __init__(self,
                  type):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScopeAllChatAdministrators(TelegramType):
+class BotCommandScopeAllChatAdministrators(BaseType):
     def __init__(self,
                  type):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScopeChat(TelegramType):
+class BotCommandScopeChat(BaseType):
     def __init__(self,
                  type,
                  chat_id):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScopeChatAdministrators(TelegramType):
+class BotCommandScopeChatAdministrators(BaseType):
     def __init__(self,
                  type,
                  chat_id):
         super().__init__(list(locals().items())[1:])
 
 
-class BotCommandScopeChatMember(TelegramType):
+class BotCommandScopeChatMember(BaseType):
     def __init__(self,
                  type,
                  chat_id,
@@ -602,18 +609,18 @@ class BotCommandScopeChatMember(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ResponseParameters(TelegramType):
+class ResponseParameters(BaseType):
     def __init__(self,
                  migrate_to_chat_id=None,
                  retry_after=None):
         super().__init__(list(locals().items())[1:])
 
 
-class InputMedia(TelegramType):
+class InputMedia(BaseType):
     pass
 
 
-class InputMediaPhoto(TelegramType):
+class InputMediaPhoto(BaseType):
     def __init__(self,
                  type,
                  media,
@@ -623,7 +630,7 @@ class InputMediaPhoto(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class InputMediaVideo(TelegramType):
+class InputMediaVideo(BaseType):
     def __init__(self,
                  type,
                  media,
@@ -638,7 +645,7 @@ class InputMediaVideo(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class InputMediaAnimation(TelegramType):
+class InputMediaAnimation(BaseType):
     def __init__(self,
                  type,
                  media,
@@ -652,7 +659,7 @@ class InputMediaAnimation(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class InputMediaAudio(TelegramType):
+class InputMediaAudio(BaseType):
     def __init__(self,
                  type,
                  media,
@@ -666,7 +673,7 @@ class InputMediaAudio(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class InputMediaDocument(TelegramType):
+class InputMediaDocument(BaseType):
     def __init__(self,
                  type,
                  media,
@@ -678,12 +685,12 @@ class InputMediaDocument(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class InputFile(TelegramType):
+class InputFile(BaseType):
     pass
 
 
 # Add this classes to convert_helper
-class Sticker(TelegramType):
+class Sticker(BaseType):
     def __init__(self,
                  file_id,
                  file_unique_id,
@@ -699,7 +706,7 @@ class Sticker(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class StickerSet(TelegramType):
+class StickerSet(BaseType):
     def __init__(self,
                  name,
                  title,
@@ -711,7 +718,7 @@ class StickerSet(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class MaskPosition(TelegramType):
+class MaskPosition(BaseType):
     def __init__(self,
                  point,
                  x_shift,
@@ -720,14 +727,14 @@ class MaskPosition(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class LabeledPrice(TelegramType):
+class LabeledPrice(BaseType):
     def __init__(self,
                  label,
                  amount):
         super().__init__(list(locals().items())[1:])
 
 
-class Invoice(TelegramType):
+class Invoice(BaseType):
     def __init__(self,
                  title,
                  description,
@@ -737,7 +744,7 @@ class Invoice(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ShippingAddress(TelegramType):
+class ShippingAddress(BaseType):
     def __init__(self,
                  country_code,
                  state,
@@ -748,7 +755,7 @@ class ShippingAddress(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class OrderInfo(TelegramType):
+class OrderInfo(BaseType):
     def __init__(self,
                  name=None,
                  phone_number=None,
@@ -757,7 +764,7 @@ class OrderInfo(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ShippingOption(TelegramType):
+class ShippingOption(BaseType):
     def __init__(self,
                  id,
                  title,
@@ -765,7 +772,7 @@ class ShippingOption(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class SuccessfulPayment(TelegramType):
+class SuccessfulPayment(BaseType):
     def __init__(self,
                  currency,
                  total_amount,
@@ -777,7 +784,7 @@ class SuccessfulPayment(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class ShippingQuery(TelegramType):
+class ShippingQuery(BaseType):
     def __init__(self,
                  id,
                  from_,
@@ -786,7 +793,7 @@ class ShippingQuery(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class PreCheckoutQuery(TelegramType):
+class PreCheckoutQuery(BaseType):
     def __init__(self,
                  id,
                  from_,
@@ -798,7 +805,7 @@ class PreCheckoutQuery(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class Game(TelegramType):
+class Game(BaseType):
     def __init__(self,
                  title,
                  description,
@@ -809,11 +816,11 @@ class Game(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class CallbackGame(TelegramType):
+class CallbackGame(BaseType):
     pass
 
 
-class GameHighScore(TelegramType):
+class GameHighScore(BaseType):
     def __init__(self,
                  position,
                  user,
@@ -821,5 +828,5 @@ class GameHighScore(TelegramType):
         super().__init__(list(locals().items())[1:])
 
 
-class PassportData(TelegramType):
+class PassportData(BaseType):
     pass

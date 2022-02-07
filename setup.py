@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="silverbots",
-    version="0.2.2",
+    version="0.2.3",
     author="SrJSilver",
     author_email="Sergey081203@ya.ru",
     description="SilverBots",
@@ -18,7 +18,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        "requests>=2.26.0",
         "websocket-client>=1.2.3"
     ],
     packages=setuptools.find_packages(),

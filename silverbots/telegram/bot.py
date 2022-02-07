@@ -305,19 +305,22 @@ class TelegramBot:
 
         offset = 0
         while True:
-            r = make_request(self.web + f"getUpdates?offset={offset}", method="POST").json()["result"]
-            for x in r:
-                if "message" in x and len(self.handle_message_funcs) != 0:
-                    message = convert_helper(x["message"], Message)
-                    if debug:
-                        print("* New message: " + str(message))
-                    for f in self.handle_message_funcs:
-                        f(message)
-                if "poll_answer" in x and len(self.handle_poll_answer_funcs) != 0:
-                    poll = convert_helper(x["poll_answer"], PollAnswer)
-                    if debug:
-                        print("* New answer on poll: " + str(poll))
-                    for f in self.handle_poll_answer_funcs:
-                        f(poll)
-            if len(r) != 0:
-                offset = r[-1]["update_id"] + 1
+            try:
+                r = make_request(self.web + f"getUpdates?offset={offset}", method="POST").json()["result"]
+                for x in r:
+                    if "message" in x and len(self.handle_message_funcs) != 0:
+                        message = convert_helper(x["message"], Message)
+                        if debug:
+                            print("* New message: " + str(message))
+                        for f in self.handle_message_funcs:
+                            f(message)
+                    if "poll_answer" in x and len(self.handle_poll_answer_funcs) != 0:
+                        poll = convert_helper(x["poll_answer"], PollAnswer)
+                        if debug:
+                            print("* New answer on poll: " + str(poll))
+                        for f in self.handle_poll_answer_funcs:
+                            f(poll)
+                if len(r) != 0:
+                    offset = r[-1]["update_id"] + 1
+            except BaseException:
+                continue
